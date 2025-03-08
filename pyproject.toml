@@ -1,0 +1,129 @@
+[tool.poetry]
+name = "delivery"
+version = "0.1.0"
+description = "Delivery microservice, developed as part of the course on DDD and Clean Architecture"
+authors = ["Murzinov Mikhail <Mikhail.MURZINOV@raiffeisen.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pydantic = "^2.10.6"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.5"
+isort = "^6.0.1"
+mypy = "^1.15.0"
+ruff = "^0.9.10"
+faker = "^37.0.0"
+assertpy = "^1.1"
+black = "^25.1.0"
+
+
+
+[tool.black]
+line-length = 120
+target-version = ["py311"]
+
+[tool.isort]
+profile = "black"
+line_length = 120
+sections = ['FUTURE', 'STDLIB', 'THIRDPARTY', 'FIRSTPARTY', 'LOCALFOLDER']
+no_lines_before = ['STDLIB', 'LOCALFOLDER']
+known_third_party = [
+    'pytest'
+]
+known_local_folder = []
+multi_line_output = 3
+lines_after_imports = 2
+
+
+[tool.ruff]
+# Allow lines to be as long as 120 characters.
+line-length = 120
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+select = ["ALL"]
+
+
+# Ignore rules according to python community
+ignore=[
+    "I", # isort включен отдельно в нашей конфигурации, потому что в рамках ruff глобально сконфигурировать его невозможно (нет проброса правил из CLI)
+    "EM",
+    "FBT",  # boolean аргументы нормально (странное правило)
+    "TRY003",  # писать message в exception нормально
+    "S101",  # assert действительно опасны, но в тестах они повсеместно, гасить каждый раз для кучи кода никому не нравится
+    # D101-105,D107 не имеет смысла принуждать людей писать докстринги без разбора, т.к. это приводит к комментариям вида «капитан очевидность» и ни к чему полезному
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "D105",
+    "D417",
+    "D107",
+    "D211",
+    "D213",
+    "G004",  # f-строки в логгировании нормальная практика
+    "FA100",
+    "FA102",  # мы не поддерживаем и не планируем поддерживать старые версии питона в своих бекендах
+    "ANN101",  # Аннотация типа для self
+    "PLR0913",  # Ограничение на число аргументов функции (5)
+    "S311", 
+    "UP006",  # Use `type` instead of `typing.Type` for type annotation - conflicts with mypy
+    "ANN102",  # Missing type annotation for `cls` in classmethod
+    "B008",  # Do not perform function call `Depends` in argument defaults
+    "ARG002",  # Unused method argument
+    "D203",  # 1 blank line required before class docstring
+    "ERA001",  # Found commented-out code
+    "RUF001",  # String contains ambiguous `с`
+    "RUF003",  # Comment contains ambiguous
+    "RUF002",  # Docstring contains ambiguous
+    "D415",  # Add closing punctuation
+]
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+    "*__init__.py",
+    "tests",
+]
+
+
+
+
+[tool.mypy]
+python_version = '3.11'
+warn_return_any = false
+warn_unused_configs = true
+ignore_missing_imports = true
+strict_optional = true
+allow_redefinition = true
+namespace_packages = true
+
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
