@@ -45,7 +45,8 @@ class TestLocation:
         [
             (Location(x=1, y=1), Location(x=10, y=10), 18),
             (Location(x=5, y=5), Location(x=1, y=1), 8),
+            (Location(x=5, y=5), Location(x=5, y=5), 0),
         ],
     )
-    def test_calc_distance_to(self, first_location: Location, second_location: Location, expected_direction: int):
-        assert_that(first_location.calc_distance_to(second_location)).is_equal_to(expected_direction)
+    def test_distance_to(self, first_location: Location, second_location: Location, expected_direction: int):
+        assert_that(first_location.distance_to(second_location)).is_equal_to(expected_direction)

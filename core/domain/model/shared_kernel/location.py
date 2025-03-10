@@ -22,5 +22,5 @@ class Location(BaseModel):
             y=random.randint(min_value, max_value),
         )
 
-    def calc_distance_to(self, target_location: "Location") -> int:
+    def distance_to(self, target_location: "Location") -> int:
         return abs(target_location.x - self.x) + abs(target_location.y - self.y)
