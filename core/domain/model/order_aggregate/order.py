@@ -28,6 +28,9 @@ class Order:
         self.status: OrderStatus = OrderStatus.CREATED
         self.courier_id: UUID | None = None
 
+    def __str__(self) -> str:
+        return f"Order({self.id}): location={self.location}, status={self.status}, courier_id={self.courier_id}"
+
     def assign(self, courier: Courier) -> None:
 
         if courier is None:
