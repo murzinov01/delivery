@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 pydantic = "^2.10.6"
+numpy = "^2.2.3"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -79,6 +80,7 @@ ignore=[
     "RUF003",  # Comment contains ambiguous
     "RUF002",  # Docstring contains ambiguous
     "D415",  # Add closing punctuation
+    "D106",  # Missing docstring in public nested class
 ]
 
 # Exclude a variety of commonly ignored directories.
