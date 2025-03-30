@@ -48,7 +48,10 @@ courier_table = sa.Table(
     sa.Column("id", sa.UUID, primary_key=True, comment="ID курьера"),
     sa.Column("name", sa.VARCHAR(100), nullable=False, comment="Имя курьера"),
     sa.Column(
-        "transport_id", sa.ForeignKey("transports.id", ondelete="CASCADE"), nullable=False, comment="ID транспорта",
+        "transport_id",
+        sa.ForeignKey("transports.id", ondelete="CASCADE"),
+        nullable=False,
+        comment="ID транспорта",
     ),
     sa.Column("location_x", sa.SmallInteger, nullable=False, comment="X координата"),
     sa.Column("location_y", sa.SmallInteger, nullable=False, comment="X координата"),
@@ -56,6 +59,7 @@ courier_table = sa.Table(
 )
 
 
+mapper_registry.map_imperatively(Transport, transport_table)
 mapper_registry.map_imperatively(
     Order,
     order_table,
@@ -68,7 +72,6 @@ mapper_registry.map_imperatively(
     courier_table,
     properties={
         "location": so.composite(Location, courier_table.c.location_x, courier_table.c.location_y),
-        "transport": so.relationship(transport_table),
+        "transport": so.relationship(Transport),
     },
 )
-mapper_registry.map_imperatively(Transport, transport_table)

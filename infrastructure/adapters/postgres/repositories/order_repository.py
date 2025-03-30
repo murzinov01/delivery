@@ -12,9 +12,10 @@ class OrderRepository(BasePostgresRepository):
 
     async def add(self, order: Order) -> None:
         self._session.add(order)
+        await self._session.flush()
 
     async def update(self, order: Order) -> None:
-        self._session.merge(order)
+        await self._session.merge(order)
 
     async def fetch_by_order_id(self, order_id: UUID) -> Order | None:
         return await self._session.get(Order, order_id)

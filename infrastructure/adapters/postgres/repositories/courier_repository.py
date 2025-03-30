@@ -13,9 +13,10 @@ class CourierRepository(BasePostgresRepository):
 
     async def add(self, courier: Courier) -> None:
         self._session.add(courier)
+        await self._session.flush()
 
     async def update(self, courier: Courier) -> None:
-        self._session.merge(courier)
+        await self._session.merge(courier)
 
     async def fetch_by_courier_id(self, courier_id: UUID) -> Courier | None:
         return await self._session.get(Courier, courier_id, options=[so.joinedload(Courier.transport)])

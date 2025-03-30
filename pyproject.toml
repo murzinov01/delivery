@@ -13,6 +13,11 @@ alembic = "^1.15.2"
 sqlalchemy = "^2.0.40"
 pydantic-settings = "^2.8.1"
 psycopg = "^3.2.6"
+that-depends = "^2.2.0"
+fastapi = "^0.115.12"
+uvicorn = "^0.34.0"
+loguru = "^0.7.3"
+greenlet = "^3.1.1"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -23,6 +28,10 @@ ruff = "^0.9.10"
 faker = "^37.0.0"
 assertpy = "^1.1"
 black = "^25.1.0"
+testcontainers-postgres = "^0.0.1rc1"
+pytest-asyncio = "^0.26.0"
+anyio = "^4.9.0"
+pytest-cov = "^6.0.0"
 
 
 
@@ -127,6 +136,11 @@ strict_optional = true
 allow_redefinition = true
 namespace_packages = true
 
+
+[tool.pytest.ini_options]
+addopts = '--cov=. -p no:warnings --cov-report term-missing'
+asyncio_default_fixture_loop_scope = "function"
+asyncio_mode = "auto"
 
 
 [build-system]
