@@ -3,9 +3,9 @@ from uuid import UUID, uuid4
 import pytest
 from assertpy import assert_that
 
-from core.domain.model.courier_aggregate import Courier
-from core.domain.model.order_aggregate import Order, OrderStatus
-from core.domain.model.shared_kernel import Location
+from core.domain.model.courier_aggregate.courier import Courier
+from core.domain.model.order_aggregate.order import Order, OrderStatus
+from core.domain.model.shared_kernel.location import Location
 
 
 class TestOrder:

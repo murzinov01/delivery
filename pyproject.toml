@@ -9,6 +9,10 @@ readme = "README.md"
 python = "^3.11"
 pydantic = "^2.10.6"
 numpy = "^2.2.3"
+alembic = "^1.15.2"
+sqlalchemy = "^2.0.40"
+pydantic-settings = "^2.8.1"
+psycopg = "^3.2.6"
 
 
 [tool.poetry.group.dev.dependencies]
