@@ -1,17 +1,15 @@
 """Container with dependencies."""
 
-from api.settings import settings
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 from that_depends import BaseContainer, ContextScopes, providers
 
-from infrastructure.adapters.postgres.connection import create_async_database_engine, create_async_session
-from infrastructure.adapters.postgres.repositories.order_repository import OrderRepository
-from infrastructure.adapters.postgres.repositories.courier_repository import CourierRepository
-from infrastructure.adapters.postgres.unit_of_work import UnitOfWork
-
+from api.settings import settings
 from core.ports.i_courier_repository import ICourierRepository
 from core.ports.i_order_repository import IOrderRepository
-
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
+from infrastructure.adapters.postgres.connection import create_async_database_engine, create_async_session
+from infrastructure.adapters.postgres.repositories.courier_repository import CourierRepository
+from infrastructure.adapters.postgres.repositories.order_repository import OrderRepository
+from infrastructure.adapters.postgres.unit_of_work import UnitOfWork
 
 
 class IOCContainer(BaseContainer):

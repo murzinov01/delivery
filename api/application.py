@@ -1,16 +1,14 @@
 """Application initialization and configuration."""
 
-import fastapi
-
 import contextlib
 import typing
 
 import fastapi
 from that_depends.providers import DIContextMiddleware
 
+from api.adapters.http import health
 from api.ioc import IOCContainer
 from api.middleware import catch_exceptions_middleware
-from api.adapters.http import health
 
 
 @contextlib.asynccontextmanager

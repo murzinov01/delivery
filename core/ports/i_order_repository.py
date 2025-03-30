@@ -1,7 +1,7 @@
 """Order repository interface."""
 
-from uuid import UUID
 from typing import Protocol
+from uuid import UUID
 
 from core.domain.model.order_aggregate.order import Order
 

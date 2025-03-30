@@ -1,7 +1,7 @@
 """Courier repository interface."""
 
-from uuid import UUID
 from typing import Protocol
+from uuid import UUID
 
 from core.domain.model.courier_aggregate.courier import Courier
 

@@ -3,10 +3,10 @@
 import contextlib
 import typing
 
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from infrastructure.adapters.postgres.repositories.courier_repository import CourierRepository
 from infrastructure.adapters.postgres.repositories.order_repository import OrderRepository
-
-from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class UnitOfWork:

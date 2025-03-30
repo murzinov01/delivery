@@ -1,10 +1,10 @@
+from assertpy import assert_that
 from sqlalchemy.ext.asyncio import AsyncSession
-from infrastructure.adapters.postgres.repositories.courier_repository import CourierRepository
-from infrastructure.adapters.postgres.unit_of_work import UnitOfWork
+
 from core.domain.model.courier_aggregate.courier import Courier
 from core.domain.model.shared_kernel.location import Location
-
-from assertpy import assert_that
+from infrastructure.adapters.postgres.repositories.courier_repository import CourierRepository
+from infrastructure.adapters.postgres.unit_of_work import UnitOfWork
 
 
 class TestCourierRepository:

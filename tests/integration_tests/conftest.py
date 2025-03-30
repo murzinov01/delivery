@@ -1,17 +1,16 @@
 """Test's configuration and common fixtures."""
 
-from loguru import logger
-
-from typing import AsyncIterable
-import pytest
 import asyncio
+from typing import AsyncIterable
 
+import pytest
+from loguru import logger
 from sqlalchemy.ext.asyncio import (
-    create_async_engine,
+    AsyncEngine,
+    AsyncSession,
     async_scoped_session,
     async_sessionmaker,
-    AsyncSession,
-    AsyncEngine,
+    create_async_engine,
 )
 from testcontainers.postgres import PostgresContainer
 
