@@ -1,11 +1,12 @@
 """Courier Repository."""
 
-from core.domain.model.courier_aggregate.courier import Courier, CourierStatus
-from infrastructure.adapters.postgres.repositories.base import BasePostgresRepository
+from uuid import UUID
+
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 
-from uuid import UUID
+from core.domain.model.courier_aggregate.courier import Courier, CourierStatus
+from infrastructure.adapters.postgres.repositories.base import BasePostgresRepository
 
 
 class CourierRepository(BasePostgresRepository):

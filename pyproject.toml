@@ -112,6 +112,7 @@ exclude = [
     "venv",
     "*__init__.py",
     "tests",
+    "infrastructure/adapters/postgres/migrations/*",
 ]
 
 

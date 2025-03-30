@@ -1,13 +1,14 @@
 """ORM models."""
 
 import typing
+
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 
-from core.domain.model.shared_kernel.location import Location
-from core.domain.model.order_aggregate.order import Order
-from core.domain.model.courier_aggregate.transport import Transport
 from core.domain.model.courier_aggregate.courier import Courier
+from core.domain.model.courier_aggregate.transport import Transport
+from core.domain.model.order_aggregate.order import Order
+from core.domain.model.shared_kernel.location import Location
 
 
 METADATA: typing.Final[sa.MetaData] = sa.MetaData(
@@ -47,7 +48,7 @@ courier_table = sa.Table(
     sa.Column("id", sa.UUID, primary_key=True, comment="ID курьера"),
     sa.Column("name", sa.VARCHAR(100), nullable=False, comment="Имя курьера"),
     sa.Column(
-        "transport_id", sa.ForeignKey("transports.id", ondelete="CASCADE"), nullable=False, comment="ID транспорта"
+        "transport_id", sa.ForeignKey("transports.id", ondelete="CASCADE"), nullable=False, comment="ID транспорта",
     ),
     sa.Column("location_x", sa.SmallInteger, nullable=False, comment="X координата"),
     sa.Column("location_y", sa.SmallInteger, nullable=False, comment="X координата"),

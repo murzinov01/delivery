@@ -3,8 +3,8 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import create_engine
 
-from infrastructure.adapters.postgres import models
 from api.settings import settings
+from infrastructure.adapters.postgres import models
 
 
 # this is the Alembic Config object, which provides

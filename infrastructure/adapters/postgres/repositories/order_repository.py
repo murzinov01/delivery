@@ -1,10 +1,11 @@
 """Order Repository."""
 
-from core.domain.model.order_aggregate.order import Order, OrderStatus
-from infrastructure.adapters.postgres.repositories.base import BasePostgresRepository
+from uuid import UUID
+
 import sqlalchemy as sa
 
-from uuid import UUID
+from core.domain.model.order_aggregate.order import Order, OrderStatus
+from infrastructure.adapters.postgres.repositories.base import BasePostgresRepository
 
 
 class OrderRepository(BasePostgresRepository):
