@@ -4,6 +4,13 @@ from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine, AsyncSession
 from that_depends import BaseContainer, ContextScopes, providers
 
 from api.settings import settings
+from core.application.use_cases.commands.assign_order.handler import AssignOrderHandler
+from core.application.use_cases.commands.create_order.handler import CreateOrderHandler
+from core.application.use_cases.commands.move_couriers.handler import MoveCouriersHandler
+from core.application.use_cases.queries.get_busy_couriers.handler import GetBusyCouriersHandler
+from core.application.use_cases.queries.get_incomplete_orders.handler import GetIncompleteOrdersHandler
+from core.domain.services.dispatch_service import DispatchService
+from core.domain.services.i_dispatch_service import IDispatchService
 from core.ports.i_courier_repository import ICourierRepository
 from core.ports.i_order_repository import IOrderRepository
 from infrastructure.adapters.postgres.connection import (
@@ -41,3 +48,23 @@ class IOCContainer(BaseContainer):
     courier_repository: ICourierRepository = providers.Factory(CourierRepository, session=database_session)
 
     unit_of_work: UnitOfWork = providers.Factory(UnitOfWork, database_session=database_session)
+
+    # ------------------------------------- Domain Services -------------------------------------
+    dispatch_service: IDispatchService = providers.Singleton(DispatchService)
+
+    # ------------------------------------- Use Cases -------------------------------------
+    create_order_handler: CreateOrderHandler = providers.Factory(CreateOrderHandler, unit_of_work=unit_of_work)
+    assign_order_handler: AssignOrderHandler = providers.Factory(
+        AssignOrderHandler,
+        unit_of_work=unit_of_work,
+        dispatch_service=dispatch_service,
+    )
+    move_couriers_handler: MoveCouriersHandler = providers.Factory(MoveCouriersHandler, unit_of_work=unit_of_work)
+    get_busy_couriers_handler: GetBusyCouriersHandler = providers.Factory(
+        GetBusyCouriersHandler,
+        db_connection=database_connection,
+    )
+    get_incomplete_orders_handler: GetIncompleteOrdersHandler = providers.Factory(
+        GetIncompleteOrdersHandler,
+        db_connection=database_connection,
+    )

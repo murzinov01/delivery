@@ -1,9 +1,11 @@
 """Move couriers command handler."""
 
-from core.application.use_cases.commands.move_couriers.move_couriers_command import MoveCouriersCommand
+from typing import TYPE_CHECKING
+
+from core.application.use_cases.commands.move_couriers.command import MoveCouriersCommand
 from core.domain.model.order_aggregate.order import Order
 from infrastructure.adapters.postgres.unit_of_work import UnitOfWork
-from typing import TYPE_CHECKING
+
 
 if TYPE_CHECKING:
     from core.domain.model.courier_aggregate.courier import Courier

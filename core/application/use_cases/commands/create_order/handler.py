@@ -2,7 +2,7 @@
 
 from uuid import UUID
 
-from core.application.use_cases.commands.create_order.create_order_command import CreateOrderCommand
+from core.application.use_cases.commands.create_order.command import CreateOrderCommand
 from core.domain.model.order_aggregate.order import Order
 from core.domain.model.shared_kernel.location import Location
 from infrastructure.adapters.postgres.unit_of_work import UnitOfWork

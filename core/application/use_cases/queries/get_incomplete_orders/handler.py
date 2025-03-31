@@ -1,20 +1,22 @@
 """Get incomplete orders query handler."""
 
+from typing import TYPE_CHECKING
+
 import sqlalchemy as sa
 from sqlalchemy.ext.asyncio import AsyncConnection
 
-from core.application.use_cases.queries.get_incomplete_orders.get_incomplete_orders_query import (
+from core.application.use_cases.queries.get_incomplete_orders.query import (
     GetIncompleteOrdersQuery,
 )
-from core.application.use_cases.queries.get_incomplete_orders.get_incomplete_orders_response import OrderDTO
+from core.application.use_cases.queries.get_incomplete_orders.response import OrderDTO
 from core.domain.model.order_aggregate.order_status import OrderStatus
-from typing import TYPE_CHECKING
+
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
 
-class GetIncompleteOrdersQuery:
+class GetIncompleteOrdersHandler:
 
     def __init__(self, db_connection: AsyncConnection) -> None:
         self._db_connection: AsyncConnection = db_connection

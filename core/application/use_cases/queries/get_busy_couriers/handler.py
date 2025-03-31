@@ -1,18 +1,20 @@
 """Get busy couriers query handler."""
 
+from typing import TYPE_CHECKING
+
 import sqlalchemy as sa
 from sqlalchemy.ext.asyncio import AsyncConnection
 
-from core.application.use_cases.queries.get_busy_couriers.get_busy_couriers_query import GetBusyCouriersQuery
-from core.application.use_cases.queries.get_busy_couriers.get_busy_query_response import CourierDTO
+from core.application.use_cases.queries.get_busy_couriers.query import GetBusyCouriersQuery
+from core.application.use_cases.queries.get_busy_couriers.response import CourierDTO
 from core.domain.model.courier_aggregate.courier_status import CourierStatus
-from typing import TYPE_CHECKING
+
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
 
-class GetBusyCouriersQuery:
+class GetBusyCouriersHandler:
 
     def __init__(self, db_connection: AsyncConnection) -> None:
         self._db_connection: AsyncConnection = db_connection

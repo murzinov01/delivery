@@ -1,13 +1,15 @@
 """Assign order command handler."""
 
-from core.application.use_cases.commands.assign_order.assign_order_command import AssignOrderCommand
-from core.domain.services.dispatch_service import DispatchService
-from infrastructure.adapters.postgres.unit_of_work import UnitOfWork
 from typing import TYPE_CHECKING
 
+from core.application.use_cases.commands.assign_order.command import AssignOrderCommand
+from core.domain.services.dispatch_service import DispatchService
+from infrastructure.adapters.postgres.unit_of_work import UnitOfWork
+
+
 if TYPE_CHECKING:
-    from core.domain.model.order_aggregate.order import Order
     from core.domain.model.courier_aggregate.courier import Courier
+    from core.domain.model.order_aggregate.order import Order
 
 
 class AssignOrderHandler:
