@@ -3,7 +3,7 @@
 import typing
 
 from loguru import logger
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
+from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine, AsyncSession, create_async_engine
 
 
 async def create_async_database_engine(
@@ -38,3 +38,8 @@ async def create_async_session(engine: AsyncEngine, **kwargs: dict) -> typing.As
         raise
     finally:
         await session.close()
+
+
+async def create_async_db_connection(engine: AsyncEngine) -> typing.AsyncIterator[AsyncConnection]:
+    async with engine.connect() as db_connection:
+        yield db_connection
