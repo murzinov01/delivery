@@ -2,8 +2,9 @@
 
 from uuid import UUID, uuid4
 
-from core.domain.model.courier_aggregate import CourierStatus, Transport
-from core.domain.model.shared_kernel import Location
+from core.domain.model.courier_aggregate.courier_status import CourierStatus
+from core.domain.model.courier_aggregate.transport import Transport
+from core.domain.model.shared_kernel.location import Location
 
 
 class Courier:

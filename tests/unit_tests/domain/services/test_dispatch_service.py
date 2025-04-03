@@ -3,10 +3,10 @@ from uuid import uuid4
 import pytest
 from assertpy import assert_that
 
-from core.domain.model.courier_aggregate import Courier, CourierStatus
-from core.domain.model.order_aggregate import Order
-from core.domain.model.shared_kernel import Location
-from core.domain.services import DispatchService
+from core.domain.model.courier_aggregate.courier import Courier, CourierStatus
+from core.domain.model.order_aggregate.order import Order
+from core.domain.model.shared_kernel.location import Location
+from core.domain.services.dispatch_service import DispatchService
 
 
 class TestDispatchService:

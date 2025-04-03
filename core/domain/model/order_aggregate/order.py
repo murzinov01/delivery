@@ -2,9 +2,9 @@
 
 from uuid import UUID
 
-from core.domain.model.courier_aggregate import Courier
-from core.domain.model.order_aggregate import OrderStatus
-from core.domain.model.shared_kernel import Location
+from core.domain.model.courier_aggregate.courier import Courier
+from core.domain.model.order_aggregate.order_status import OrderStatus
+from core.domain.model.shared_kernel.location import Location
 
 
 class Order:

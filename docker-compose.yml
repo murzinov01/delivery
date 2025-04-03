@@ -1,0 +1,31 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    # restart: always
+    volumes:
+      - .:/srv/www
+    depends_on:
+      - db
+    environment:
+      - DATABASE_DSN=postgresql+psycopg://postgres:postgres@localhost:5500/delivery-db
+      - APP_PORT=8010
+      - WATCHFILES_FORCE_POLLING=true
+    network_mode: host
+
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=delivery-db
+    ports:
+      - "5500:5432"
+    volumes:
+      - delivery-db:/var/lib/postgresql/data
+
+volumes:
+  delivery-db:
+    driver: local

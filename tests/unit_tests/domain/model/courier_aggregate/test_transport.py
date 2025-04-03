@@ -3,8 +3,8 @@ from uuid import UUID
 import pytest
 from assertpy import assert_that
 
-from core.domain.model.courier_aggregate import Transport
-from core.domain.model.shared_kernel import Location
+from core.domain.model.courier_aggregate.transport import Transport
+from core.domain.model.shared_kernel.location import Location
 
 
 class TestTransport:

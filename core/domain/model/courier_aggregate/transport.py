@@ -5,7 +5,7 @@ from uuid import UUID, uuid4
 
 import numpy as np
 
-from core.domain.model.shared_kernel import Location
+from core.domain.model.shared_kernel.location import Location
 
 
 class Transport:

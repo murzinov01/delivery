@@ -2,8 +2,8 @@
 
 from typing import Protocol
 
-from core.domain.model.courier_aggregate import Courier
-from core.domain.model.order_aggregate import Order
+from core.domain.model.courier_aggregate.courier import Courier
+from core.domain.model.order_aggregate.order import Order
 
 
 class IDispatchService(Protocol):
