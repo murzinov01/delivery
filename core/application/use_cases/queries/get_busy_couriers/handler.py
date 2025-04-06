@@ -23,7 +23,7 @@ class GetBusyCouriersHandler:
         query: str = """
             SELECT id, name, location_x, location_y, transport_id
             FROM public.couriers
-            WHERE status == :target_status
+            WHERE status = :target_status
         """
         query_result: Sequence[sa.Row] = (
             await self._db_connection.execute(

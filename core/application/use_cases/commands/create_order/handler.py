@@ -6,6 +6,7 @@ from core.application.use_cases.commands.create_order.command import CreateOrder
 from core.domain.model.order_aggregate.order import Order
 from core.domain.model.shared_kernel.location import Location
 from infrastructure.adapters.postgres.unit_of_work import UnitOfWork
+from infrastructure.adapters.postgres.repositories.order_repository import OrderRepository
 
 
 class CreateOrderHandler:
@@ -14,20 +15,21 @@ class CreateOrderHandler:
         def __init__(self, basket_id: UUID) -> None:
             super().__init__(f"Order with {basket_id=} already created")
 
-    def __init__(self, unit_of_work: UnitOfWork) -> None:
+    def __init__(self, unit_of_work: UnitOfWork, order_repository: OrderRepository) -> None:
         self._unit_of_work: UnitOfWork = unit_of_work
+        self._order_repository: OrderRepository = order_repository
 
     async def handle(self, message: CreateOrderCommand) -> None:
-        async with self._unit_of_work.start() as repository:
-            # Проверяем на случай, когда заказ с таким basket_id уже существует
-            if await repository.order.fetch_order_by_id(message.basket_id):
-                raise self.AlreadyCreatedOrderError(message.basket_id)
+        # Проверяем на случай, когда заказ с таким basket_id уже существует
+        if await self._order_repository.fetch_order_by_id(message.basket_id):
+            raise self.AlreadyCreatedOrderError(message.basket_id)
 
-            # Получаем геопозицию из Geo (пока ставим фэйковое значение)
-            location = Location.random()
+        # Получаем геопозицию из Geo (пока ставим фэйковое значение)
+        location = Location.random()
 
-            # Создаем заказ
-            order = Order(order_id=message.basket_id, location=location)
+        # Создаем заказ
+        order = Order(order_id=message.basket_id, location=location)
 
-            # Сохраняем заказ
-            repository.order.add(order)
+        # Сохраняем заказ
+        await self._order_repository.add(order)
+        await self._unit_of_work.save_changes()
