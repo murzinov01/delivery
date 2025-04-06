@@ -31,6 +31,11 @@ class Order:
     def __str__(self) -> str:
         return f"Order({self.id}): location={self.location}, status={self.status}, courier_id={self.courier_id}"
 
+    def __repr__(self) -> str:
+        return (
+            f"Order(id={self.id!r}, location={self.location!r}, status={self.status!r}, courier_id={self.courier_id!r})"
+        )
+
     def assign(self, courier: Courier) -> None:
 
         if courier is None:

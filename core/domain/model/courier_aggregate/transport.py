@@ -38,6 +38,9 @@ class Transport:
     def __str__(self) -> str:
         return f"Transport({self.id}): {self.name=}, {self.speed=}"
 
+    def __repr__(self) -> str:
+        return f"Transport(id={self.id!r}, name={self.name!r}, speed={self.speed!r})"
+
     def move(self, location_from: Location, location_to: Location) -> Location:
         max_move_distance: int = self.speed
 

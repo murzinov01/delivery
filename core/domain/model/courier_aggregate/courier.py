@@ -27,6 +27,9 @@ class Courier:
         self.location: Location = location
         self.status: CourierStatus = CourierStatus.FREE
 
+    def __repr__(self) -> str:
+        return f"Courier(id={self.id!r}, name={self.name!r}, transport={self.transport!r}, location={self.location!r}, status={self.status!r})"
+
     def set_busy(self) -> None:
         if self.status == CourierStatus.BUSY:
             raise self.AlreadyBusyStatusError

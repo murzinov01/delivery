@@ -1,9 +1,9 @@
 """Container with dependencies."""
 
+from api.settings import settings
 from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine, AsyncSession
 from that_depends import BaseContainer, ContextScopes, providers
 
-from api.settings import settings
 from core.application.use_cases.commands.assign_order.handler import AssignOrderHandler
 from core.application.use_cases.commands.create_order.handler import CreateOrderHandler
 from core.application.use_cases.commands.move_couriers.handler import MoveCouriersHandler
@@ -42,24 +42,34 @@ class IOCContainer(BaseContainer):
         autoflush=False,
     )
     database_connection: AsyncConnection = providers.ContextResource(create_async_db_connection, engine=database_engine)
+    unit_of_work: UnitOfWork = providers.Factory(UnitOfWork, database_session=database_session)
 
     # ------------------------------------- DB repositories -------------------------------------
-    order_repository: IOrderRepository = providers.Factory(OrderRepository, session=database_session)
-    courier_repository: ICourierRepository = providers.Factory(CourierRepository, session=database_session)
-
-    unit_of_work: UnitOfWork = providers.Factory(UnitOfWork, database_session=database_session)
+    order_repository: IOrderRepository = providers.Factory(OrderRepository, unit_of_work=unit_of_work)
+    courier_repository: ICourierRepository = providers.Factory(CourierRepository, unit_of_work=unit_of_work)
 
     # ------------------------------------- Domain Services -------------------------------------
     dispatch_service: IDispatchService = providers.Singleton(DispatchService)
 
     # ------------------------------------- Use Cases -------------------------------------
-    create_order_handler: CreateOrderHandler = providers.Factory(CreateOrderHandler, unit_of_work=unit_of_work)
+    create_order_handler: CreateOrderHandler = providers.Factory(
+        CreateOrderHandler,
+        order_repository=order_repository,
+        unit_of_work=unit_of_work,
+    )
     assign_order_handler: AssignOrderHandler = providers.Factory(
         AssignOrderHandler,
+        order_repository=order_repository,
+        courier_repository=courier_repository,
         unit_of_work=unit_of_work,
         dispatch_service=dispatch_service,
     )
-    move_couriers_handler: MoveCouriersHandler = providers.Factory(MoveCouriersHandler, unit_of_work=unit_of_work)
+    move_couriers_handler: MoveCouriersHandler = providers.Factory(
+        MoveCouriersHandler,
+        order_repository=order_repository,
+        courier_repository=courier_repository,
+        unit_of_work=unit_of_work,
+    )
     get_busy_couriers_handler: GetBusyCouriersHandler = providers.Factory(
         GetBusyCouriersHandler,
         db_connection=database_connection,
