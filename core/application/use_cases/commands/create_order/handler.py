@@ -5,8 +5,8 @@ from uuid import UUID
 from core.application.use_cases.commands.create_order.command import CreateOrderCommand
 from core.domain.model.order_aggregate.order import Order
 from core.domain.model.shared_kernel.location import Location
-from infrastructure.adapters.postgres.unit_of_work import UnitOfWork
 from infrastructure.adapters.postgres.repositories.order_repository import OrderRepository
+from infrastructure.adapters.postgres.unit_of_work import UnitOfWork
 
 
 class CreateOrderHandler:

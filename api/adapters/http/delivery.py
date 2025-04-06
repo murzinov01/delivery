@@ -5,25 +5,28 @@
 #   timestamp: 2025-04-06T12:21:27+00:00
 
 import uuid
-from fastapi import APIRouter, status, Depends
-from fastapi.exceptions import HTTPException
+from typing import TYPE_CHECKING, Annotated
+
 from api.adapters.http.contract.models import (
     ApiV1CouriersGetResponse,
     ApiV1OrdersActiveGetResponse,
-    Error,
     Courier,
-    Order,
+    Error,
     Location,
+    Order,
 )
-from that_depends import Provide
 from api.ioc import IOCContainer
+from fastapi import APIRouter, Depends, status
+from fastapi.exceptions import HTTPException
+from that_depends import Provide
+
+from core.application.use_cases.commands.create_order.command import CreateOrderCommand
+from core.application.use_cases.commands.create_order.handler import CreateOrderHandler
 from core.application.use_cases.queries.get_busy_couriers.handler import GetBusyCouriersHandler
 from core.application.use_cases.queries.get_busy_couriers.query import GetBusyCouriersQuery
-from core.application.use_cases.commands.create_order.handler import CreateOrderHandler
-from core.application.use_cases.commands.create_order.command import CreateOrderCommand
-from core.application.use_cases.queries.get_incomplete_orders.query import GetIncompleteOrdersQuery
 from core.application.use_cases.queries.get_incomplete_orders.handler import GetIncompleteOrdersHandler
-from typing import TYPE_CHECKING, Annotated
+from core.application.use_cases.queries.get_incomplete_orders.query import GetIncompleteOrdersQuery
+
 
 if TYPE_CHECKING:
     from core.application.use_cases.queries.get_busy_couriers.response import CourierDTO
@@ -67,7 +70,10 @@ async def create_order(
     try:
         await orders_handler.handle(create_order_command)
     except Exception as exc:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=Error(code=1, message=str(exc)).model_dump()) from exc
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=Error(code=1, message=str(exc)).model_dump(),
+        ) from exc
 
 
 @ROUTER.get(
@@ -83,11 +89,12 @@ async def get_orders(
 
     try:
         orders: list[OrderDTO] = await orders_handler.handle(get_orders_query)
-        print("orders", orders)
     except Exception as exc:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=Error(code=0, message=str(exc)).model_dump(),
         ) from exc
 
-    return ApiV1OrdersActiveGetResponse(root=[Order(id=order.id, location=Location(x=order.location.x, y=order.location.y)) for order in orders])
+    return ApiV1OrdersActiveGetResponse(
+        root=[Order(id=order.id, location=Location(x=order.location.x, y=order.location.y)) for order in orders],
+    )

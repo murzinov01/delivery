@@ -1,8 +1,10 @@
 """Base class for all postgres repositories."""
 
-from infrastructure.adapters.postgres.unit_of_work import UnitOfWork
-from infrastructure.adapters.postgres.models import mapper_registry
 from typing import TYPE_CHECKING
+
+from infrastructure.adapters.postgres.unit_of_work import UnitOfWork
+from infrastructure.adapters.postgres.models import mapper_registry  # noqa: F401
+
 
 if TYPE_CHECKING:
     from sqlalchemy.ext.asyncio import AsyncSession

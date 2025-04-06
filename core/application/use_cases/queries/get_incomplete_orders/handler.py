@@ -5,11 +5,8 @@ from typing import TYPE_CHECKING
 import sqlalchemy as sa
 from sqlalchemy.ext.asyncio import AsyncConnection
 
-from core.application.use_cases.queries.get_incomplete_orders.query import (
-    GetIncompleteOrdersQuery,
-)
+from core.application.use_cases.queries.get_incomplete_orders.query import GetIncompleteOrdersQuery
 from core.application.use_cases.queries.get_incomplete_orders.response import OrderDTO
-from core.domain.model.shared_kernel.location import Location
 from core.domain.model.order_aggregate.order_status import OrderStatus
 
 

@@ -17,6 +17,15 @@ class DBSettings(BaseSettings):
     pool_pre_ping: bool = True
 
 
+class JobsSettings(BaseSettings):
+
+    assign_orders_job_id: str = "assign_orders_job"
+    assign_orders_run_every_sec: int = 1
+
+    move_couriers_job_id: str = "move_couriers_job"
+    move_couriers_run_every_sec: int = 2
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(extra="ignore")
 
@@ -32,6 +41,9 @@ class Settings(BaseSettings):
 
     # Database settings
     database: DBSettings = DBSettings()
+
+    # Jobs settings
+    jobs: JobsSettings = JobsSettings()
 
 
 settings: typing.Final = Settings()

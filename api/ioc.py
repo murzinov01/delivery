@@ -1,9 +1,9 @@
 """Container with dependencies."""
 
+from api.settings import settings
 from sqlalchemy.ext.asyncio import AsyncConnection, AsyncEngine, AsyncSession
 from that_depends import BaseContainer, ContextScopes, providers
 
-from api.settings import settings
 from core.application.use_cases.commands.assign_order.handler import AssignOrderHandler
 from core.application.use_cases.commands.create_order.handler import CreateOrderHandler
 from core.application.use_cases.commands.move_couriers.handler import MoveCouriersHandler
@@ -53,7 +53,9 @@ class IOCContainer(BaseContainer):
 
     # ------------------------------------- Use Cases -------------------------------------
     create_order_handler: CreateOrderHandler = providers.Factory(
-        CreateOrderHandler, order_repository=order_repository, unit_of_work=unit_of_work,
+        CreateOrderHandler,
+        order_repository=order_repository,
+        unit_of_work=unit_of_work,
     )
     assign_order_handler: AssignOrderHandler = providers.Factory(
         AssignOrderHandler,

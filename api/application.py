@@ -4,20 +4,30 @@ import contextlib
 import typing
 
 import fastapi
+from api.adapters.background_jobs.scheduler import start_async_scheduler
+from api.adapters.http import delivery, health
+from api.ioc import IOCContainer
 from that_depends.providers import DIContextMiddleware
 
-from api.adapters.http import health, delivery
-from api.ioc import IOCContainer
-from api.middleware import catch_exceptions_middleware
+if typing.TYPE_CHECKING:
+    from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 
 @contextlib.asynccontextmanager
 async def lifespan(_: typing.Any) -> typing.AsyncIterator[None]:  # noqa: ANN401
+    # Init resources
     await IOCContainer.init_resources()
-    try:
-        yield
-    finally:
-        await IOCContainer.tear_down()
+
+    # Start async sheduler process
+    async_sheduler: AsyncIOScheduler = await start_async_scheduler()
+
+    yield
+
+    # Shutdown async sheduler process
+    async_sheduler.shutdown()
+
+    # Clean up resources
+    await IOCContainer.tear_down()
 
 
 APP: fastapi.FastAPI = fastapi.FastAPI(
