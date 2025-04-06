@@ -10,7 +10,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class DBSettings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="DATABASE_")
 
-    dsn: str = "postgresql+psycopg://postgres:postgres@localhost:5500/delivery-db"
+    dsn: str = "postgresql+psycopg://username:secret@localhost:5432/delivery"
     pool_min_size: int = 5
     pool_max_overflow_size: int = 10
     connection_tries: int = 5
