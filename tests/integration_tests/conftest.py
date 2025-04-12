@@ -5,13 +5,7 @@ from typing import AsyncIterable
 
 import pytest
 from loguru import logger
-from sqlalchemy.ext.asyncio import (
-    AsyncEngine,
-    AsyncSession,
-    async_scoped_session,
-    async_sessionmaker,
-    create_async_engine,
-)
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
 from testcontainers.postgres import PostgresContainer
 
 from infrastructure.adapters.postgres.models import mapper_registry
