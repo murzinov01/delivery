@@ -31,7 +31,7 @@ class Settings(BaseSettings):
 
     # App settings
     app_host: str = "0.0.0.0"  # noqa: S104
-    app_port: int = 8010
+    app_port: int = 8082
     log_level: str = "DEBUG"
     workdir: Path = Path.cwd()
     timezone: str = "Europe/Moscow"

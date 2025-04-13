@@ -2,12 +2,13 @@
 
 from typing import TYPE_CHECKING
 
+from loguru import logger
+
 from core.application.use_cases.commands.assign_order.command import AssignOrderCommand
 from core.domain.services.dispatch_service import DispatchService
 from infrastructure.adapters.postgres.repositories.courier_repository import CourierRepository
 from infrastructure.adapters.postgres.repositories.order_repository import OrderRepository
 from infrastructure.adapters.postgres.unit_of_work import UnitOfWork
-from loguru import logger
 
 
 if TYPE_CHECKING:

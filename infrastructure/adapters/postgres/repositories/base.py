@@ -2,8 +2,8 @@
 
 from typing import TYPE_CHECKING
 
-from infrastructure.adapters.postgres.unit_of_work import UnitOfWork
 from infrastructure.adapters.postgres.models import mapper_registry  # noqa: F401
+from infrastructure.adapters.postgres.unit_of_work import UnitOfWork
 
 
 if TYPE_CHECKING:

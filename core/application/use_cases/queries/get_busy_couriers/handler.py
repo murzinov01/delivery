@@ -6,7 +6,7 @@ import sqlalchemy as sa
 from sqlalchemy.ext.asyncio import AsyncConnection
 
 from core.application.use_cases.queries.get_busy_couriers.query import GetBusyCouriersQuery
-from core.application.use_cases.queries.get_busy_couriers.response import CourierDTO
+from core.application.use_cases.queries.get_busy_couriers.response import CourierDTO, Location
 from core.domain.model.courier_aggregate.courier_status import CourierStatus
 
 
@@ -31,4 +31,12 @@ class GetBusyCouriersHandler:
                 parameters={"target_status": CourierStatus.BUSY},
             )
         ).fetchall()
-        return [CourierDTO(**row._mapping) for row in query_result]  # noqa: SLF001
+        return [
+            CourierDTO(
+                id=row.id,
+                name=row.name,
+                location=Location(x=row.location_x, y=row.location_y),
+                transport_id=row.transport_id,
+            )
+            for row in query_result
+        ]

@@ -7,7 +7,9 @@ import fastapi
 from api.adapters.background_jobs.scheduler import start_async_scheduler
 from api.adapters.http import delivery, health
 from api.ioc import IOCContainer
+from fastapi.middleware.cors import CORSMiddleware
 from that_depends.providers import DIContextMiddleware
+
 
 if typing.TYPE_CHECKING:
     from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -37,7 +39,16 @@ APP: fastapi.FastAPI = fastapi.FastAPI(
     description="Отвечает за учет курьеров, деспетчеризацию доставкуов, доставку",
 )
 
+
 APP.add_middleware(DIContextMiddleware)
+APP.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # Include your routers here
 APP.include_router(health.ROUTER, tags=["SERVICE"])
